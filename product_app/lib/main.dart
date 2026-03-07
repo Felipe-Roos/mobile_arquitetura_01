@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:product_app/data/models/datasourches/product_remote_datasource.dart';
+import 'package:product_app/data/models/datasourches/productcachedatasource.dart';
 import 'package:product_app/repositories/productrepositoryimpl.dart';
+import 'package:product_app/presentation/viewmodels/productviewmodel.dart'; // adiciona essa linha
 import 'package:product_app/presentation/pages/productpage.dart';
-import 'package:product_app/presentation/viewmodels/productviewmodel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final datasource = ProductRemoteDatasource(Dio());
-    final repository = ProductRepositoryImpl(datasource);
+    final remote = ProductRemoteDatasource(Dio());
+    final cache = ProductCacheDatasource();
+    final repository = ProductRepositoryImpl(remote, cache);
     final viewModel = ProductViewModel(repository);
 
     return MaterialApp(
