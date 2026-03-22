@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:product_app/presentation/viewmodels/productviewmodel.dart';
 import 'package:product_app/provider/favorites_provider.dart';
+import 'package:product_app/presentation/pages/product_detail_page.dart';
 
 class ProductPage extends StatefulWidget {
   final ProductViewModel viewModel;
@@ -70,6 +71,14 @@ class _ProductPageState extends State<ProductPage> {
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ProductDetailPage(product: product),
+                      ),
+                    );
+                  },
                   leading: Image.network(
                     product.image,
                     width: 50,
