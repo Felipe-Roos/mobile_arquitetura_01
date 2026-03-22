@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:product_app/presentation/viewmodels/productviewmodel.dart';
+import 'package:product_app/provider/favorites_provider.dart';
 
 class ProductPage extends StatefulWidget {
   final ProductViewModel viewModel;
@@ -86,6 +88,20 @@ class _ProductPageState extends State<ProductPage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
+                  ),
+                  trailing: Consumer<FavoritesProvider>(
+                    builder: (context, favoritesProvider, _) {
+                      final isFavorite = favoritesProvider.isFavorite(product.id);
+                      return IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.grey,
+                        ),
+                        onPressed: () {
+                          favoritesProvider.toggleFavorite(product);
+                        },
+                      );
+                    },
                   ),
                 ),
               );
